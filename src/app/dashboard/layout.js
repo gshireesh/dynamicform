@@ -20,7 +20,7 @@ export default function FormsLayout({ children }) {
     if (auth.loading) {
       dispatch(fetchWhoAmIAsync());
     }
-  }, [])
+  }, [auth, dispatch])
 
   useEffect(() => {
     if (!auth.isAuthenticated && !auth.loading) {

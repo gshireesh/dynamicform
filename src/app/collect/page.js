@@ -7,12 +7,14 @@ import {
   selectCollect,
   upsertCollectFormAsync
 } from "@/app/store/collect/collectFormsSlice";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 
 export default function CollectPage({params}) {
 
-  const slug = params['slug']
+  const searchParams = useSearchParams()
+
+  const slug = searchParams.get('slug')
   const collect = useSelector(selectCollect);
   const dispatch = useDispatch();
   const router = useRouter()
@@ -24,6 +26,13 @@ export default function CollectPage({params}) {
     data[key] = value;
     setFormData(data);
   }
+
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearCollect());
+    }
+  }, [])
 
   useEffect(() => {
     if (collect.successUpsert) {
@@ -52,15 +61,15 @@ export default function CollectPage({params}) {
       {
         collect.detailForm && (
           <div>
-            <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-              <div class="mx-auto max-w-2xl">
-                <div class="text-center">
-                  <h2 class="text-xl text-gray-800 mb-3 font-bold sm:text-3xl">
+            <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+              <div className="mx-auto max-w-2xl">
+                <div className="text-center">
+                  <h2 className="text-xl text-gray-800 mb-3 font-bold sm:text-3xl">
                     {collect.detailForm.title}
                   </h2>
                   <p>{collect.detailForm.description}</p>
                 </div>
-                <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10">
+                <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10">
                   <form onSubmit={handleSubmit}>
                     {
                       collect.detailForm.questions.map((question, index) => (

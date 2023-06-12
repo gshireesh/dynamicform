@@ -3,7 +3,8 @@ import {PlusIcon, TrashIcon} from '@heroicons/react/24/solid'
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "@/app/store/auth/authSlice";
-import {selectForms, upsertFormAsync} from "@/app/store/forms/formsSlice";
+import {clearFormSlice, selectForms, upsertFormAsync} from "@/app/store/forms/formsSlice";
+import {useRouter} from "next/navigation";
 
 export default function FormPage(props) {
 
@@ -16,6 +17,7 @@ export default function FormPage(props) {
   const [questions, setQuestions] = useState([{...defaultOption}])
 
   const dispatch = useDispatch()
+  const router = useRouter()
 
   useEffect(()=> {
     if (props['data']) {
@@ -24,7 +26,19 @@ export default function FormPage(props) {
       setId(props['data']['id'])
       setQuestions(props['data']['questions'])
     }
-  },[])
+  },[props])
+
+  useEffect(() => {
+    if (forms.successUpsert) {
+      router.push("/dashboard/responses/?slug="+forms.detailForm['id'])
+    }
+  }, [forms.successUpsert])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearFormSlice())
+    }
+  }, [])
 
   const formData = {
     title,description, questions

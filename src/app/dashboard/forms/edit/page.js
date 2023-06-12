@@ -4,11 +4,14 @@ import {useEffect} from "react";
 import {fetchFormByIdAsync, selectForms} from "@/app/store/forms/formsSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "@/app/store/auth/authSlice";
+import {useSearchParams} from "next/navigation";
 
 
 export default function EditFormPage({params}) {
 
-  const slug = params['slug']
+  const searchParams = useSearchParams()
+
+  const slug = searchParams.get('slug')
   const auth = useSelector(selectAuth);
   const forms = useSelector(selectForms);
   const dispatch = useDispatch();

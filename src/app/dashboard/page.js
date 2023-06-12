@@ -19,9 +19,6 @@ export default function Home() {
     }
   }, [auth])
 
-  useEffect(() => {
-
-  }, [])
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 shadow-md z-10">
@@ -36,10 +33,10 @@ export default function Home() {
                 <div className="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
                   <svg className="max-w-[10\rem]" viewBox="0 0 375 428" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M254.509 253.872L226.509 226.872" className="stroke-gray-400"
-                          stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+                          stroke="currentColor" strokeWidth="7" stroke-linecap="round"/>
                     <path
                       d="M237.219 54.3721C254.387 76.4666 264.609 104.226 264.609 134.372C264.609 206.445 206.182 264.872 134.109 264.872C62.0355 264.872 3.60864 206.445 3.60864 134.372C3.60864 62.2989 62.0355 3.87207 134.109 3.87207C160.463 3.87207 184.993 11.6844 205.509 25.1196"
-                      className="stroke-gray-400" stroke="currentColor" stroke-width="7"
+                      className="stroke-gray-400" stroke="currentColor" strokeWidth="7"
                       stroke-linecap="round"/>
                     <rect x="270.524" y="221.872" width="137.404" height="73.2425" rx="36.6212"
                           transform="rotate(40.8596 270.524 221.872)" className="fill-gray-400"
@@ -47,7 +44,7 @@ export default function Home() {
                     <ellipse cx="133.109" cy="404.372" rx="121.5" ry="23.5" className="fill-gray-400"
                              fill="currentColor"/>
                     <path d="M111.608 188.872C120.959 177.043 141.18 171.616 156.608 188.872"
-                          className="stroke-gray-400" stroke="currentColor" stroke-width="7"
+                          className="stroke-gray-400" stroke="currentColor" strokeWidth="7"
                           stroke-linecap="round"/>
                     <ellipse cx="96.6084" cy="116.872" rx="9" ry="12" className="fill-gray-400"
                              fill="currentColor"/>
@@ -67,12 +64,12 @@ export default function Home() {
           { forms.data?.map((form) => (
             <div key={form.id} className="flex justify-between gap-x-6 hover:bg-indigo-50 cursor-pointer">
               <div  className="flex gap-x-4 flex-1">
-                <Link className="flex-grow p-5" href={"/dashboard/forms/"+form.id+'/responses'}>
+                <Link className="flex-grow p-5" href={"/dashboard/responses?slug="+form.id}>
                   <p className="text-sm font-semibold line-clamp-1 leading-6 text-gray-900">{form.title}</p>
                   <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">{form.description}</p>
                   <p className="mt-1 line-clamp-2 text-xs leading-5 text-amber-700">{form.total} responses received</p>
                 </Link>
-                <Link href={"/dashboard/forms/"+form.id} className="items-center flex p-5 text-indigo-500">
+                <Link href={"/dashboard/forms/edit?slug="+form.id} className="items-center flex p-5 text-indigo-500">
                   Edit
                 </Link>
               </div>

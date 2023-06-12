@@ -37,8 +37,8 @@ export const formsSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    clear: (state) => {
-      return initialState
+    clearFormSlice: (state) => {
+      return initialState;
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -73,21 +73,22 @@ export const formsSlice = createSlice({
       .addCase(upsertFormAsync.pending, (state) => {
         state.status = 'loading'
         state.upsertError = ""
+        state.successUpsert = false;
       })
       .addCase(upsertFormAsync.fulfilled, (state, action) => {
         state.status = 'idle'
-        const data = state.data.filter((item) => item.id !== action.payload['id'])
-        data.push(action.payload)
-        state.data = data;
+        state.detailForm = action.payload
+        state.successUpsert = true;
         toast("success", { autoClose: 2000, type: 'success' })
       }).addCase(upsertFormAsync.rejected, (state, action) => {
         state.status = 'idle'
         state.upsertError=action.error.message
+        state.successUpsert = false;
       })
   },
 })
 
-export const { logout } = formsSlice.actions
+export const { clearFormSlice } = formsSlice.actions
 
 export const selectForms = (state) => state.forms
 

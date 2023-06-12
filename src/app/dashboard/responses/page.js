@@ -6,11 +6,15 @@ import {selectAuth} from "@/app/store/auth/authSlice";
 import {clearResponses, fetchResponsesAsync, selectResponses} from "@/app/store/responses/responsesSlice";
 import {getFrontendUrl} from "@/app/utils";
 import Link from "next/link";
+import {useSearchParams} from "next/navigation";
 
 export default function Responses({params}) {
 
+  const searchParams = useSearchParams()
+
+  const slug = searchParams.get('slug')
+
   const auth = useSelector(selectAuth)
-  const slug = params['slug']
   const forms = useSelector(selectForms);
   const responses = useSelector(selectResponses);
   const dispatch = useDispatch();
@@ -51,7 +55,7 @@ export default function Responses({params}) {
         <div>
           <p className="px-4">Share this url to collect responses</p>
           <p className="bg-indigo-900 p-4 text-white rounded-md my-4">
-            <Link href={"/collect/"+slug}>{url}collect/{slug}</Link>
+            <Link href={"/collect/?slug="+slug}>{url}collect/?slug={slug}</Link>
           </p>
         </div>
 
