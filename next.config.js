@@ -6,6 +6,7 @@ const nextConfig = {
   output: 'export',
   distDir: 'docs',
   basePath: '/dynamicform',
+  trailingSlash: true,
   assetPrefix: isProd ? 'https://gshireesh.github.io/dynamicform/' : undefined,
 }
 
