@@ -7,6 +7,8 @@ import {clearResponses, fetchResponsesAsync, selectResponses} from "@/app/store/
 import {getFrontendUrl} from "@/app/utils";
 import Link from "next/link";
 import {useSearchParams} from "next/navigation";
+import {CSVLink} from "react-csv";
+import {CloudArrowDownIcon} from "@heroicons/react/24/solid"
 
 export default function Responses({params}) {
 
@@ -18,6 +20,9 @@ export default function Responses({params}) {
   const forms = useSelector(selectForms);
   const responses = useSelector(selectResponses);
   const dispatch = useDispatch();
+
+  const csvData = responses.data.map((data) => data.data)
+  csvData.unshift(forms.detailForm?.questions.map((q) => q.title))
 
   const url = getFrontendUrl();
   useEffect(() => {
@@ -48,16 +53,24 @@ export default function Responses({params}) {
     <div className="flex flex-col h-full">
       <div className="p-4 shadow-md z-10 flex">
         <h1 className="text-xl line-clamp-1 flex-1">{forms.detailForm?.title}</h1>
-        <h1 className="text-xl line-clamp-1">{forms.detailForm?.total} responses</h1>
+
+        {
+          (forms.detailForm) && (
+            <CSVLink filename={forms.detailForm?.id+'.csv'} className="btn btn-primary inline-block" data={csvData}>
+              <CloudArrowDownIcon className="h-4" />
+            </CSVLink>
+          )
+        }
       </div>
       <div className="overflow-y-auto overflow-x-hidden p-5">
 
         <div>
           <p className="px-4">Share this url to collect responses</p>
-          <p className="bg-indigo-900 p-4 text-white rounded-md my-4">
+          <p className="bg-indigo-500 p-4 text-white rounded-md my-4">
             <Link href={"/collect/?slug="+slug}>{url}collect/?slug={slug}</Link>
           </p>
         </div>
+
 
         <table className="table border">
           <thead>

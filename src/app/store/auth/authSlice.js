@@ -12,7 +12,7 @@ const initialState = {
 
 export const loginAsync = createAsyncThunk(
   'auth/login',
-  async (email, password) => {
+  async ({email, password}) => {
     return await fetchLogin(email, password)
   }
 )

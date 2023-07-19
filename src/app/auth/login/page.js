@@ -23,7 +23,7 @@ export default function Login() {
   const login = (e) => {
     e.preventDefault()
     console.log(e)
-    dispatch(loginAsync(email, password))
+    dispatch(loginAsync({email, password}))
   }
 
   return (
